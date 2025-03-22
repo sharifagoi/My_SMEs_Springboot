@@ -3,10 +3,12 @@ package com.application.smesbackend.mapper;
 import com.application.smesbackend.dto.UserDto;
 import com.application.smesbackend.entity.Role;
 import com.application.smesbackend.entity.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserMapper {
 
-    public static User toEntity(UserDto userDto) {
+    public User toEntity(UserDto userDto) {
         User user = new User();
         user.setId(userDto.getId());
         user.setFullName(userDto.getFullName());
@@ -17,7 +19,7 @@ public class UserMapper {
         return user;
     }
 
-    public static UserDto toDto(User user) {
+    public UserDto toDto(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setFullName(user.getFullName());

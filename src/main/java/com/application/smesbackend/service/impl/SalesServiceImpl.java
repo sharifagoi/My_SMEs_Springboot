@@ -24,9 +24,12 @@ public class SalesServiceImpl implements SalesService {
     private SalesMapper salesMapper;
 
     @Override
-   public SalesDto recordSales(SalesDto salesDto) {
+    public SalesDto recordSales(SalesDto salesDto) {
         Sales sales = salesMapper.toEntity(salesDto);
         sales.setDate(LocalDateTime.now().toString()); // Set the date field
+        if (sales.getType() == null) {
+            sales.setType("default"); // Ensure the type field is set
+        }
         Sales savedSales = salesRepository.save(sales);
         return salesMapper.toDto(savedSales);
     }
@@ -48,6 +51,9 @@ public class SalesServiceImpl implements SalesService {
     public SalesDto addProduct(SalesDto salesDto) {
         Sales sales = salesMapper.toEntity(salesDto);
         sales.setDate(LocalDateTime.now().toString()); // Set the date field
+        if (sales.getType() == null) {
+            sales.setType("product"); // Ensure the type field is set
+        }
         Sales savedSales = salesRepository.save(sales);
         return salesMapper.toDto(savedSales);
     }

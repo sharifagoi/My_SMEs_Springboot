@@ -26,13 +26,14 @@ public class UserServiceImpl implements UserService {
     private static BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        User user = UserMapper.toEntity(userDto);
+        User user = userMapper.toEntity(userDto);
         user.setPassword(encoder.encode(user.getPassword())); // Encode the password here
         User savedUser = userRepository.save(user);
-        return UserMapper.toDto(savedUser);
+        return userMapper.toDto(savedUser);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService {
         if (user.isEmpty()) {
             throw new RuntimeException(USER_NOT_FOUND_MESSAGE);
         }
-        return UserMapper.toDto(user.get());
+        return userMapper.toDto(user.get());
     }
 
     @Override
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Invalid password");
         }
 
-        return UserMapper.toDto(user);
+        return userMapper.toDto(user);
     }
 
     @Override
@@ -67,9 +68,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(UserDto userDto) {
-        User user = UserMapper.toEntity(userDto);
+        User user = userMapper.toEntity(userDto);
         User savedUser = userRepository.save(user);
-        return UserMapper.toDto(savedUser);
+        return userMapper.toDto(savedUser);
     }
 
     @Override
@@ -87,7 +88,7 @@ public class UserServiceImpl implements UserService {
         if (user.isEmpty()) {
             throw new RuntimeException(USER_NOT_FOUND_MESSAGE);
         }
-        return UserMapper.toDto(user.get());
+        return userMapper.toDto(user.get());
     }
 
     @Override

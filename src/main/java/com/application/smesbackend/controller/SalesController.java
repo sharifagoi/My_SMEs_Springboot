@@ -1,14 +1,13 @@
 package com.application.smesbackend.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import com.application.smesbackend.dto.DailySalesDto;
 import com.application.smesbackend.dto.SalesDto;
 import com.application.smesbackend.dto.Profit;
 import com.application.smesbackend.service.SalesService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,15 +35,11 @@ public class SalesController {
         List<SalesDto> latestSales = salesService.getLatestSales();
         return new ResponseEntity<>(latestSales, HttpStatus.OK);
     }
+
     @PostMapping("/product")
     public ResponseEntity<SalesDto> addProduct(@RequestBody SalesDto salesDto) {
-        try {
-            SalesDto product = salesService.addProduct(salesDto);
-            return new ResponseEntity<>(product, HttpStatus.CREATED);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        SalesDto addedProduct = salesService.addProduct(salesDto);
+        return new ResponseEntity<>(addedProduct, HttpStatus.CREATED);
     }
 
     @GetMapping("/products")
